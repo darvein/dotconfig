@@ -286,9 +286,6 @@ config/nnn
 config/nomacs
 config/Notepadqq
 config/NvChad
-config/nvim
-config/nvim-nvchad
-config/nvim-vanilla
 config/obsidian
 config/obs-studio
 config/okularpartrc
