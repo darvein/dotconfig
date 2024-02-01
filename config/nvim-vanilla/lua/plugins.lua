@@ -36,6 +36,9 @@ return {
   },
   {
     "folke/zen-mode.nvim",
+    config = function()
+      require "extensions.zen-mode"
+    end,
     opts = {}
   },
   -- Mason

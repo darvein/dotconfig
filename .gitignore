@@ -421,6 +421,7 @@ config/zoomus.conf
 config/zplug
 config/zsh
 config/zsh-syntax-highlighting
+config/pypoetry
 
 ### Clean
 tmux/tmux/plugins
