@@ -34,13 +34,6 @@ return {
   {
     "dhruvasagar/vim-table-mode",
   },
-  {
-    "folke/zen-mode.nvim",
-    config = function()
-      require "extensions.zen-mode"
-    end,
-    opts = {}
-  },
   -- Mason
   {
     "williamboman/mason.nvim",
