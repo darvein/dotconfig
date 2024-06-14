@@ -1,46 +1,33 @@
 source ~/.drv.profile
-source ~/.config/zplug/init.zsh
-
-# Load plugins
-zplug "agkozak/zsh-z"
-zplug "m42e/zsh-histdb-fzf", from:github, at:main
-zplug "larkery/zsh-histdb", from:github, at:main
-zplug "Aloxaf/fzf-tab", from:github, at:main
-
-if ! zplug check; then
-    zplug install
-fi
-zplug load
-
-export FZF_BASE=~/.fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# fzf initialization
+export FZF_BASE=~/.fzf
+
+# Load prompt and other utilities
 autoload -U promptinit; promptinit
-autoload U colors && colors
+autoload -U colors && colors
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit -i
 
+# Custom functions and aliases
 autoload zmv zcalc take
 alias zcp='zmv -C' zln='zmv -L'
 
+# Options
 setopt AUTO_NAME_DIRS
 setopt autocd autopushd cdable_vars extended_glob ksh_glob
 
-# Dirs
+# Directory shortcuts
 hash -d inc=~/work/inc
 hash -d me=~/work/me
+hash -d tmp=~/tmp
 
-# Autocompletion
-source <(awless completion zsh)
-source <(helm completion zsh)
-complete -o nospace -C /usr/bin/terraform terraform
-complete -C '~/.local/bin/aws_completer' aws
-
-# histdb
+# histdb settings
 HISTDB_FZF_DEFAULT_MODE=4
 bindkey '^R' histdb-fzf-widget
 
-# vi mode
+# vi mode settings
 bindkey -v
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -48,9 +35,9 @@ bindkey '^E' edit-command-line                   # Opens Vim to edit current com
 bindkey '^S' history-incremental-search-forward  # Perform forward search in command line history
 bindkey '^P' history-search-backward             # Go back/search in history (autocomplete)
 bindkey '^N' history-search-forward              # Go forward/search in history (autocomplete)
-bindkey '^l' clear-screen # Clear screen
+bindkey '^l' clear-screen                        # Clear screen
 
-# fzf-tab
+# fzf-tab settings
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -63,5 +50,18 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion::complete:make:*:targets' call-command true
 zstyle ':completion:*' menu select
 
+# Prompt configuration
 setopt PROMPT_SUBST
 PROMPT='%{$fg_bold[white]%}%(4~|../%2~|%~)%{$fg_bold[yellow]%}➤ %{$reset_color%}'
+
+# Autocompletion
+for file in ~/.zsh.d/*.autocomplete; do source $file ; done
+
+# Load plugins
+source ~/.config/zplug/init.zsh
+zplug "agkozak/zsh-z", defer:2
+zplug "m42e/zsh-histdb-fzf", defer:2, from:github, at:main
+zplug "larkery/zsh-histdb", defer:2, from:github, at:main
+zplug "Aloxaf/fzf-tab", defer:2, from:github, at:main
+zplug load
+
